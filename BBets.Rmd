@@ -44,6 +44,30 @@ URN = 1:365
 ```{r}
 classSize = 35
 winAmount=1
+loseAmount= 2.00
+
+test = vector('numeric')
+saveBank=vector('numeric')
+for (j in 1:30){
+  bank=0
+for(i in 1:637){
+test = sample(URN, size=classSize, replace=TRUE)
+ifelse(length(unique(test))==classSize, (bank=bank-loseAmount),(bank=bank+winAmount))
+saveBank[j] = bank
+}
+}
+hist(saveBank)
+
+```
+```{r}
+favstats(saveBank)
+```
+
+Brownlow's expected return is about $275.
+
+```{r}
+classSize = 35
+winAmount=1
 loseAmount= 4.25
 
 test = vector('numeric')
@@ -93,7 +117,38 @@ hist(saveBank)
 favstats(saveBank)
 ```
 
+The class size to make this a fair bet is 28.
+
 # In the class and payoff as described what is a 95% confidence interval for Brownlow's earnings?
+ 
+```{r}
+classSize = 35
+winAmount=1
+loseAmount= 2.00
+
+test = vector('numeric')
+saveBank=vector('numeric')
+for (j in 1:1000){
+  bank=0
+for(i in 1:637){
+test = sample(URN, size=classSize, replace=TRUE)
+ifelse(length(unique(test))==classSize, (bank=bank-loseAmount),(bank=bank+winAmount))
+saveBank[j] = bank
+}
+}
+hist(saveBank)
+
+bankSort=sort(saveBank)
+lcl=bankSort[25]
+ucl=bankSort[975]
+
+```
+```{r}
+favstats(saveBank)
+``` 
+  
+ ucl=`r ucl` 
+ lcl=`r lcl`
   
 <!--Explain and display your method of coming up with a 95% confidence interval of  professor Brownlows winnings (or losings)-->
 
@@ -102,3 +157,6 @@ favstats(saveBank)
 
 <!--Discussion and conclusion here.  If professor Brownlow is consistantly making or losing money how could he change his payout so that his profits center on zero?  Also discuss what size his class should be in order to have his current scheme balance at zero profit.!-->
 
+1. What are the fair odds for a bet on matching birthdays in a 35 person class. 4.25 to 1
+2. For what size class is a 2:1 odds bet fair. 28 students
+3. How much money would Brownlow be expected to end up with if the bets went as described. $275
